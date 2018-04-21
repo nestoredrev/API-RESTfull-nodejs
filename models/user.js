@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 //Libreria para cifrar/encriptar
 //instalar la libreria: npm i -S bcrypt-nodejs
 const brypt = require('bcryprt-nodejs');
+//instalar la libreria: npm i -S crypto
 const crypto = require('crypto');
 
 const UserSchema = new Schema({
