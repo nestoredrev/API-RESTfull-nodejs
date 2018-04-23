@@ -1,5 +1,7 @@
 `use strict`
 
+//Instalar jwt para nodejs
+//npm i -S jwt-simple
 const jwt = require('jwt-simple');
 //Instalar momentjs
 //npm i -S moment
@@ -22,4 +24,39 @@ function createToken(user)
 	return jwt.encode(payload, config.SECRET_TOKEN);
 }
 
-module.exports = createToken
+function decodeToken(token)
+{
+	//Promesa nativa de ECMA SCRIPT6
+	const decoded = new Promise((resolve, reject) =>{
+		try
+		{
+			const payload = jwt.decode(token, config.SECRET_TOKEN);
+			if(payload.exp <= moment().unix())
+			{
+				reject({
+					status: 401,
+					message: `El token ha expirado`
+				});
+			}
+			else
+			{
+				resolve(payload.sub)
+			}
+		}
+		catch(err)
+		{
+			reject({
+				status: 500,
+				message: `Token invalido: ${err}`
+			})
+		}
+	});
+
+	//Devolver la promesa
+	return decoded;
+}
+
+module.exports = {
+	createToken,
+	decodeToken
+}

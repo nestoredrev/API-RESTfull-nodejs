@@ -2,6 +2,8 @@
 `use strict`
 const express 		= require('express');
 const productCtrl 	= require('../controlers/product.js');
+const userCtrl		= require('../controlers/user.js');
+const auth 			= require('../middlewares/auth.js'); 	
 const api 			= express.Router();
 
 
@@ -20,5 +22,14 @@ api.put('/product/:productId', productCtrl.updateProduct);
 
 //Eliminar el producto mediante el metodo DELETE
 api.delete('/product/:productId', productCtrl.deleteProduct);
+
+
+api.post('/signup', userCtrl.signUp);
+api.post('/signin', userCtrl.signIn);
+
+//Area privada
+api.get('/private', auth, (req, res) => {
+	res.status(200).send({message: `Tienes acceso`})
+})
 
 module.exports = api;

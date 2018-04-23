@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 //Libreria para cifrar/encriptar
 //instalar la libreria: npm i -S bcrypt-nodejs
-const brypt = require('bcryprt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
 //instalar la libreria: npm i -S crypto
 const crypto = require('crypto');
 
@@ -23,9 +23,9 @@ const UserSchema = new Schema({
 
 //Antes de insertar el usuario en la BBDD vamos a encriptar su contraseña
 //next es para pasar a la sugiente middleware para que no se pare ahi la funcion
-UserSchema.pre('save', (next) => {
-	let user = this;
-	if(!user.isModified('password')) // si no se esta modificando la contraseña next
+UserSchema.pre('save', function(next) {
+
+	if(!this.isModified('password')) // si no se esta modificando la contraseña next
 	{
 		return next();
 	}
@@ -39,7 +39,7 @@ UserSchema.pre('save', (next) => {
 			}
 			else
 			{
-				bcrypt.hash(user.password, salt, null , (err, hash) => {
+				bcrypt.hash(this.password, salt, null , (err, hash) => {
 					if(err)
 					{
 						//Error al generar el hash del password
@@ -47,7 +47,7 @@ UserSchema.pre('save', (next) => {
 					}
 					else
 					{
-						user.password = hash;
+						this.password = hash;
 						next();
 					}
 				});
@@ -60,14 +60,14 @@ UserSchema.pre('save', (next) => {
 UserSchema.methods.gravatar = function (){
 	if(!this.email)
 	{
-		return `http://gravatar.com/avatar/?s200&d=retro`; // si no tiene mail devuelve un avatar por defecto
+		return `https://gravatar.com/avatar/?s200&d=retro`; // si no tiene mail devuelve un avatar por defecto
 	} 
 	else
 	{
 		//hash en md5 necesario para el gravatar para cifrar la url de avatar que tiene por defecto
 		const md5 = crypto.createHash('md5').update(this.email).digest('hex');
 	
-		return `http://gravatar/avatar/${md5}//?s200&d=retro`;
+		return `https://gravatar.com/avatar/${md5}/?s200&d=retro`;
 	}
 }
 

@@ -1,0 +1,28 @@
+<form id="login" method="POST">
+	<input type="mail" name="email" value="" placeholder="Correo electronico">
+	<br><br>
+	<input type="password" name="password" value="" placeholder="Tu contraseña">
+	<br><br>
+	<input type="submit" value="Sign In!">
+</form>
+
+<!-- Vanillajs -->
+<!-- Llamada ajax mediante vanillajs y Ecma script 6 -->
+<script type="text/javascript">
+
+	const formLogin = document.querySelector('#login');
+	formLogin.addEventListener('submit', event => {
+		event.preventDefault();
+		const data = new URLSearchParams(new FormData(formLogin));
+		//Llamada ajax mediante vanillajs
+		fetch('/api/signin', {
+			method: 'POST',
+			body: data
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data) // Obtener los resultados de la llamada ajax
+			localStorage.setItem('token',data.token) // Guardar el token del usuario logeado
+		})
+	});
+</script>
