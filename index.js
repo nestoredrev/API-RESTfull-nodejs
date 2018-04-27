@@ -24,6 +24,7 @@ const config 	= require('./config.js');
  		}
  		else
  		{
+ 			console.log('Conexion correcta a la bbdd de MongoDB');
  			//Arrancar servidor nodejs
  			app.listen(config.port, () => {
     			console.log(`API REST corriendo en http://localhost:${config.port}`)

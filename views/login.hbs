@@ -8,7 +8,7 @@
 
 <!-- Vanillajs -->
 <!-- Llamada ajax mediante vanillajs y Ecma script 6 -->
-<script type="text/javascript">
+<script>
 
 	const formLogin = document.querySelector('#login');
 	formLogin.addEventListener('submit', event => {
@@ -19,7 +19,7 @@
 			method: 'POST',
 			body: data
 		})
-		.then(res => res.json())
+		.then(res => res.json()) //parsear la respuesta en formado json
 		.then(data => {
 			console.log(data) // Obtener los resultados de la llamada ajax
 			localStorage.setItem('token',data.token) // Guardar el token del usuario logeado

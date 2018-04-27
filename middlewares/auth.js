@@ -12,7 +12,7 @@ function isAuth(req, res, next)
 	}
 	else
 	{
-		//Obteninedo solo el token de la cabecera
+		//Obteninedo solo el token de la cabecera: Bearer token
 		const token = req.headers.authorization.split(' ')[1];
 
 		services.decodeToken(token)

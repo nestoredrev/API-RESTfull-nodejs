@@ -9,7 +9,7 @@ const api 			= express.Router();
 
 
 //Mostrar todos los producos
-api.get('/product',productCtrl.getProducts);
+api.get('/product', auth, productCtrl.getProducts);
 
 //Obtener un producto mediante GET
 api.get('/product/:productId', productCtrl.getProduct);

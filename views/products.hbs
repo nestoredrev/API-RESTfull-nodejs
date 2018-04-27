@@ -1,0 +1,27 @@
+<script>
+
+	const myHeaders = new Headers();
+	//Añadir el token en la cabeceza de la peticion
+	myHeaders.append('Authorization', `Bearer ${localStorage.token}`)
+	
+	let productList = document.createElement('ul');
+
+	fetch('/api/product',{
+		method: 'GET',
+		headers: myHeaders
+	})
+	.then(res => res.json())
+	.then(data => {
+
+		//map recorre los objetos como si fuera un foreach
+		data.products.map(product => {
+			let text = document.createTextNode(product.name)
+			let elem = document.createElement('li')
+			elem.appendChild(text)
+			productList.appendChild(elem)
+		})
+
+	document.body.appendChild(productList)
+	})
+
+</script>

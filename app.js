@@ -37,8 +37,14 @@ app.engine('.hbs', hbs({
 
 app.set('view engine', '.hbs');
 app.use('/api', api); // ruta raiz /api
+
+//Renderizar la pagina login desde el servidor node
 app.get('/login', (req, res) => {
 	res.render('login') // Que vista rederizar a nivel de la carpeta Views
+});
+
+app.get('/products', (req, res) => {
+	res.render('products')
 });
 
 

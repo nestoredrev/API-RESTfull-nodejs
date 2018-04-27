@@ -56,6 +56,16 @@ UserSchema.pre('save', function(next) {
 	}
 })
 
+//Metodo para verificar la contraseña. cb es la funcion que nos devuelve si hay error o si la contraseña
+//es valida o no en parametro isMatch
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
+
 //Gravatar a partir de un email sacar su foto de perfil
 UserSchema.methods.gravatar = function (){
 	if(!this.email)
