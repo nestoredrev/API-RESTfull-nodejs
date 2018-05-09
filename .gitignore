@@ -1,0 +1,6 @@
+#Ignorar la subida de los logs en el cambio del repositorio
+services/logs/*.txt
+
+node_modules
+.DS_Store
+*.log
