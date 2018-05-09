@@ -1,8 +1,9 @@
 `use strict`
 
-const mongoose = require('mongoose');
-const User = require('../models/user.js');
-const service = require('../services/index.js');
+const mongoose 	= require('mongoose');
+const moment 	= require('moment');
+const User 		= require('../models/user.js');
+const service 	= require('../services/index.js');
 
 function signUp(req, res)
 {
@@ -47,6 +48,14 @@ function signIn(req, res)
 		      if (!isMatch) return res.status(404).send({ msg: `Error de contraseña: ${req.body.email}` })
 
 				//req.user = user;
+				let email = user.email;
+				let ip = req.ip;
+				let browser = req.headers['user-agent'];
+				let date = moment().format('DD/MM/YYYY H:mm:ss');
+				let logData = `[Login date: ${date}] --- [IP Address: ${ip}] --- [User: ${email} ] --- [Browser: ${browser}] `;
+				
+				service.createLog(logData);
+
 				return res.status(200).send({
 					message: `Te has logueado correctamente`,
 					token: service.createToken(user)

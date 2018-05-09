@@ -7,6 +7,7 @@ const jwt = require('jwt-simple');
 //npm i -S moment
 const moment = require('moment');
 const config = require('../config.js');
+const fs 	 = require('fs'); //Libreria File System propia de Nodejs
 
 function createToken(user)
 {
@@ -56,7 +57,16 @@ function decodeToken(token)
 	return decoded;
 }
 
+function createLog(logData)
+{
+	//__dirname devuelve la ruta del directorio sobre el fichero que se esta trabajando
+	filePath = __dirname + '/logs/logSignIn.txt';
+	var logFile = fs.createWriteStream(filePath, { flags: 'a' });
+	logFile.write(logData + '\n');
+}
+
 module.exports = {
 	createToken,
-	decodeToken
+	decodeToken,
+	createLog
 }
