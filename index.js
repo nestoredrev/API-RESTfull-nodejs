@@ -13,7 +13,7 @@ const mongoose 	= require('mongoose');
 const app 		= require('./app.js');
 const config 	= require('./config.js');
 
- mongoose.connect(config.db, (err, res) => {
+ mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true  }, (err, res) => {
 
  	try
  	{
