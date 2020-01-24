@@ -1,12 +1,15 @@
 //Añadir las rutas de la API
 `use strict`
 const express 		= require('express');
+const spotifyCtrl 	= require('../controlers/spotify.js');
 const productCtrl 	= require('../controlers/product.js');
 const userCtrl		= require('../controlers/user.js');
 const auth 			= require('../middlewares/auth.js'); 	
 const api 			= express.Router();
 
 
+//Get token spotify
+api.get('/spotify/:client_id/:client_secret', spotifyCtrl.getTokenSpotify);
 
 //Mostrar todos los producos
 api.get('/product', auth, productCtrl.getProducts);
